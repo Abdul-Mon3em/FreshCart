@@ -10,7 +10,6 @@ export default function ResetPassword() {
   const [errorMess, setErrorMess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // تعريف الـ validation schema باستخدام Yup
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     newPassword: Yup.string()
@@ -21,7 +20,6 @@ export default function ResetPassword() {
       .oneOf([Yup.ref("newPassword")], "Passwords must match"),
   });
 
-  // تعريف الـ formik
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -33,7 +31,6 @@ export default function ResetPassword() {
       try {
         setIsLoading(true);
 
-        // إرسال طلب إعادة تعيين كلمة المرور
         const resetResponse = await axios.put(
           "https://ecommerce.routemisr.com/api/v1/auth/resetPassword",
           {
@@ -42,14 +39,11 @@ export default function ResetPassword() {
           }
         );
 
-        // إذا تم استلام الـ token بنجاح
         if (resetResponse.data.token) {
           const token = resetResponse.data.token;
 
-          // تخزين الـ token في localStorage
           localStorage.setItem("resetToken", token);
 
-          // إرسال طلب التحقق من الـ token
           const verifyResponse = await axios.get(
             "https://ecommerce.routemisr.com/api/v1/auth/verifyToken",
             {
@@ -59,19 +53,17 @@ export default function ResetPassword() {
             }
           );
 
-          // إذا تم التحقق بنجاح
           if (verifyResponse.status === 200) {
-            localStorage.removeItem("resetToken"); // إزالة الـ token بعد التحقق
-            navigate("/login"); // الانتقال إلى صفحة تسجيل الدخول
+            localStorage.removeItem("resetToken");
+            navigate("/login");
           }
         }
       } catch (error) {
-        // في حالة حدوث خطأ
         setErrorMess(
           "Failed to reset password or verify token. Please try again."
         );
       } finally {
-        setIsLoading(false); // إيقاف حالة التحميل
+        setIsLoading(false);
       }
     },
   });
@@ -86,7 +78,6 @@ export default function ResetPassword() {
           Reset Password
         </h2>
 
-        {/* حقل إدخال البريد الإلكتروني */}
         <div className="relative z-0 w-full mb-5 group">
           <input
             {...formik.getFieldProps("email")}
@@ -112,7 +103,6 @@ export default function ResetPassword() {
           </div>
         )}
 
-        {/* حقل إدخال كلمة المرور الجديدة */}
         <div className="relative z-0 w-full mb-5 group">
           <input
             {...formik.getFieldProps("newPassword")}
@@ -138,7 +128,6 @@ export default function ResetPassword() {
           </div>
         )}
 
-        {/* حقل تأكيد كلمة المرور */}
         <div className="relative z-0 w-full mb-5 group">
           <input
             {...formik.getFieldProps("confirmPassword")}
@@ -164,7 +153,6 @@ export default function ResetPassword() {
           </div>
         )}
 
-        {/* عرض رسالة الخطأ إذا وجدت */}
         {errorMess && (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -174,7 +162,6 @@ export default function ResetPassword() {
           </div>
         )}
 
-        {/* زر إعادة تعيين كلمة المرور */}
         <button
           type="submit"
           disabled={isLoading}

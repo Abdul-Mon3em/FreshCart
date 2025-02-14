@@ -3,7 +3,6 @@ import axios from "axios";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import "./ForgetPassword-module.css";
-import { IoMdClose } from "react-icons/io";
 
 export default function ForgetPassword({ setForgotPasswordVisited }) {
   const [email, setEmail] = useState("");
