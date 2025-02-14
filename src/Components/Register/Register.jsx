@@ -60,18 +60,19 @@ export default function Register() {
     <>
       <form
         onSubmit={formik.handleSubmit}
-        className="w-3/4 max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"
+        className="w-full max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md"
       >
-        <h2 className="text-2xl text-mainclr my-7 font-bold">Register</h2>
+        <h2 className="text-3xl text-mainclr my-7 font-bold text-center">
+          Register
+        </h2>
+
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
+            {...formik.getFieldProps("name")}
             type="text"
             name="name"
             id="name"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -89,15 +90,14 @@ export default function Register() {
             {formik.errors.name}
           </div>
         )}
+
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
+            {...formik.getFieldProps("email")}
             type="email"
             name="email"
             id="email"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -115,20 +115,19 @@ export default function Register() {
             {formik.errors.email}
           </div>
         )}
+
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
+            {...formik.getFieldProps("password")}
             type="password"
             name="password"
             id="password"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
             htmlFor="password"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-mainclr peer-focus:dark:text-mainclr peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-mainclr peer-focus:dark:text-mainclr peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Password
           </label>
@@ -141,24 +140,23 @@ export default function Register() {
             {formik.errors.password}
           </div>
         )}
+
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.rePassword}
+            {...formik.getFieldProps("rePassword")}
             type="password"
             name="rePassword"
             id="rePassword"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
             htmlFor="rePassword"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-mainclr peer-focus:dark:text-mainclr peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-mainclr peer-focus:dark:text-mainclr peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Confirm password
+            Confirm Password
           </label>
-        </div>{" "}
+        </div>
         {formik.errors.rePassword && formik.touched.rePassword && (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -167,22 +165,21 @@ export default function Register() {
             {formik.errors.rePassword}
           </div>
         )}
+
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phone}
-            type="tel"
+            {...formik.getFieldProps("phone")}
+            type="text"
             name="phone"
             id="phone"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
             htmlFor="phone"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-mainclr peer-focus:dark:text-mainclr peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-mainclr peer-focus:dark:text-mainclr peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Phone
+            Phone Number
           </label>
         </div>
         {formik.errors.phone && formik.touched.phone && (
@@ -193,19 +190,23 @@ export default function Register() {
             {formik.errors.phone}
           </div>
         )}
-        {errorMess ? (
+        {errorMess && (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
             role="alert"
           >
             {errorMess}
           </div>
-        ) : null}
+        )}
+
         <button
           type="submit"
-          className="text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] focus:ring-4 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-[#198754] mt-3 dark:text-[#198754] dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms]"
+          disabled={isLoading}
+          className={`text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] focus:ring-4 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-lg px-6 py-2 text-center me-2 mb-2 dark:border-[#198754] dark:text-[#198754] dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms] ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          {isLoading ? <FaSpinner className="animate-spin" /> : "Submit"}
+          {isLoading ? <FaSpinner className="animate-spin" /> : "Register"}
         </button>
       </form>
     </>

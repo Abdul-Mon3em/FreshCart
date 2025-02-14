@@ -10,6 +10,7 @@ export default function ResetPassword() {
   const [errorMess, setErrorMess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // تعريف الـ validation schema باستخدام Yup
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     newPassword: Yup.string()
@@ -20,6 +21,7 @@ export default function ResetPassword() {
       .oneOf([Yup.ref("newPassword")], "Passwords must match"),
   });
 
+  // تعريف الـ formik
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,6 +33,7 @@ export default function ResetPassword() {
       try {
         setIsLoading(true);
 
+        // إرسال طلب إعادة تعيين كلمة المرور
         const resetResponse = await axios.put(
           "https://ecommerce.routemisr.com/api/v1/auth/resetPassword",
           {
@@ -39,8 +42,14 @@ export default function ResetPassword() {
           }
         );
 
+        // إذا تم استلام الـ token بنجاح
         if (resetResponse.data.token) {
           const token = resetResponse.data.token;
+
+          // تخزين الـ token في localStorage
+          localStorage.setItem("resetToken", token);
+
+          // إرسال طلب التحقق من الـ token
           const verifyResponse = await axios.get(
             "https://ecommerce.routemisr.com/api/v1/auth/verifyToken",
             {
@@ -50,16 +59,19 @@ export default function ResetPassword() {
             }
           );
 
+          // إذا تم التحقق بنجاح
           if (verifyResponse.status === 200) {
-            navigate("/login");
+            localStorage.removeItem("resetToken"); // إزالة الـ token بعد التحقق
+            navigate("/login"); // الانتقال إلى صفحة تسجيل الدخول
           }
         }
       } catch (error) {
+        // في حالة حدوث خطأ
         setErrorMess(
           "Failed to reset password or verify token. Please try again."
         );
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // إيقاف حالة التحميل
       }
     },
   });
@@ -68,19 +80,20 @@ export default function ResetPassword() {
     <>
       <form
         onSubmit={formik.handleSubmit}
-        className="lg:max-w-screen-xl container mx-auto"
+        className="w-full max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md"
       >
-        <h2 className="text-2xl text-mainclr my-7 font-bold">Reset Password</h2>
+        <h2 className="text-3xl text-mainclr my-7 font-bold text-center">
+          Reset Password
+        </h2>
 
+        {/* حقل إدخال البريد الإلكتروني */}
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
+            {...formik.getFieldProps("email")}
             type="email"
             name="email"
             id="email"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -99,15 +112,14 @@ export default function ResetPassword() {
           </div>
         )}
 
+        {/* حقل إدخال كلمة المرور الجديدة */}
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.newPassword}
+            {...formik.getFieldProps("newPassword")}
             type="password"
             name="newPassword"
             id="newPassword"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -126,15 +138,14 @@ export default function ResetPassword() {
           </div>
         )}
 
+        {/* حقل تأكيد كلمة المرور */}
         <div className="relative z-0 w-full mb-5 group">
           <input
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.confirmPassword}
+            {...formik.getFieldProps("confirmPassword")}
             type="password"
             name="confirmPassword"
             id="confirmPassword"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -153,6 +164,7 @@ export default function ResetPassword() {
           </div>
         )}
 
+        {/* عرض رسالة الخطأ إذا وجدت */}
         {errorMess && (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -162,18 +174,20 @@ export default function ResetPassword() {
           </div>
         )}
 
-        <div className="flex justify-between">
-          <button
-            type="submit"
-            className="text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] focus:ring-4 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-[#198754] mt-3 dark:text-[#198754] dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms]"
-          >
-            {isLoading ? (
-              <FaSpinner className="animate-spin" />
-            ) : (
-              "Reset Password"
-            )}
-          </button>
-        </div>
+        {/* زر إعادة تعيين كلمة المرور */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] focus:ring-4 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-lg px-6 py-2 text-center me-2 mb-2 dark:border-[#198754] dark:text-[#198754] dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms] ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          {isLoading ? (
+            <FaSpinner className="animate-spin" />
+          ) : (
+            "Reset Password"
+          )}
+        </button>
       </form>
     </>
   );

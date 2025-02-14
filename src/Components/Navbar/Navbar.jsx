@@ -105,7 +105,7 @@ export default function Navbar() {
                   <div className="flex gap-5 lg:flex-row flex-col">
                     <Link className="group  " to={"/cart"}>
                       <span className="relative  me-auto lg:ms-0 inline-flex items-center text-sm font-medium text-center text-white">
-                        <FaShoppingCart className="text-black text-4xl h-10 group-hover:text-[#4FA74F] transition-all duration-300" />
+                        <FaShoppingCart className="text-[#28A745] text-4xl h-10 group-hover:text-[#218838] transition-all duration-300" />
 
                         <div className="absolute inline-flex items-center group-hover:bg-black justify-center w-6 h-6 text-xs font-bold text-white transition-all duration-300 bg-[#4FA74F] border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
                           {cartCount}

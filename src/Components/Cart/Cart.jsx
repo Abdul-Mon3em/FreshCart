@@ -14,6 +14,7 @@ export default function Cart() {
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [isClearing, setIsClearing] = useState(false); // State for clearing cart
 
   useEffect(() => {
     const loadCart = async () => {
@@ -22,10 +23,16 @@ export default function Cart() {
       setIsLoading(false);
     };
     loadCart();
-  }, []); 
+  }, []);
 
   const totalPrice =
     cartItems?.reduce((total, item) => total + item.price * item.count, 0) ?? 0;
+
+  const handleClearCart = async () => {
+    setIsClearing(true); // Start clearing
+    await clearCart(); // Wait for the cart to clear
+    setIsClearing(false); // Done clearing
+  };
 
   if (isLoading) {
     return <p className="text-center text-lg font-semibold">Loading cart...</p>;
@@ -58,7 +65,7 @@ export default function Cart() {
                         onClick={() =>
                           updateProductQuantity(
                             item.product?._id,
-                            Math.max(1, item.count - 1)
+                            Math.max(1, item.count - 1) // هنا تم إصلاح القوس
                           )
                         }
                         className="bg-gray-200 px-3 py-1 rounded"
@@ -82,7 +89,7 @@ export default function Cart() {
                 </div>
                 <button
                   onClick={() => removeProductFromCart(item.product?._id)}
-                  className="bg-red-500 hover:bg-red-600 duration-200 text-white px-4 py-2 rounded"
+                  className="px-4 py-2 text-red-500 border border-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
                 >
                   Remove
                 </button>
@@ -95,14 +102,18 @@ export default function Cart() {
           </div>
           <div className="mt-4 flex gap-4">
             <button
-              onClick={clearCart}
-              className="bg-red-500 hover:bg-red-600 duration-200 text-white px-4 py-2 rounded"
+              onClick={handleClearCart}
+              disabled={isClearing} // Disable button while clearing
+              className={`px-4 py-2 text-red-500 border border-red-500 rounded-lg hover:bg-red-500 hover:text-white transition ${
+                isClearing ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Clear Cart
+              {isClearing ? "Clearing..." : "Clear Cart"}
             </button>
+
             <button
               onClick={() => navigate("/checkout")}
-              className="bg-green-500 hover:bg-green-600 duration-200 text-white px-4 py-2 rounded"
+              className="px-4 py-2 text-green-600 border border-green-600 rounded-lg hover:bg-green-600 hover:text-white transition"
             >
               Checkout
             </button>

@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+} from "react-router-dom";
+import BrandProducts from "./Components/BrandProducts/BrandProducts";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import Cart from "./Components/Cart/Cart";
@@ -77,6 +82,14 @@ function App() {
           ),
         },
         {
+          path: "/brand/:brandSlug",
+          element: (
+            <ProtectedRoute>
+              <BrandProducts />
+            </ProtectedRoute>
+          ),
+        },
+        {
           path: "allorders",
           element: (
             <ProtectedRoute>
@@ -104,14 +117,6 @@ function App() {
         },
         {
           path: "productsDetails/:pid/:cid",
-          element: (
-            <ProtectedRoute>
-              <ProductDetails />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "products/productsDetails/:pid/:cid",
           element: (
             <ProtectedRoute>
               <ProductDetails />
@@ -148,7 +153,11 @@ function App() {
           path: "reset-password",
           element: (
             <AuthProtected>
-              {forgotPasswordVisited ? <ResetPassword /> : <NotFound />}
+              {forgotPasswordVisited ? (
+                <ResetPassword />
+              ) : (
+                <Navigate to="/forget-password" />
+              )}
             </AuthProtected>
           ),
         },

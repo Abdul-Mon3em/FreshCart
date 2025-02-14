@@ -55,7 +55,7 @@ export default function ProductCard({ product }) {
       {error && <p className="text-red-500 text-sm">{error}</p>}
       <button
         onClick={() => handleAddProductToCart(product.id)}
-        className="text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] focus:ring-1 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-[#198754] mt-3 dark:text-[#198754] dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms]"
+        className="text-white group-hover:translate-y-0 duration-500 transition-all translate-y-20 w-full mt-2 bg-mainclrbold hover:bg-mainclrbold focus:ring-4 focus:ring-mainclrbg-mainclrbold font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-mainclrbold dark:hover:bg-mainclrbold focus:outline-none dark:focus:ring-mainclrbg-mainclrbold"
       >
         Add Product
       </button>

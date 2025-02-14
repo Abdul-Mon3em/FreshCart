@@ -48,29 +48,6 @@ export default function CheckOut() {
     "Arish",
     "10th of Ramadan City",
     "Marsa Matruh",
-    "Idku",
-    "Bilbeis",
-    "Mit Ghamr",
-    "Al-Hamidiyya",
-    "Desouk",
-    "Qalyub",
-    "Abu Kabir",
-    "Kafr El Dawwar",
-    "Girga",
-    "Akhmim",
-    "Matareya",
-    "New Cairo",
-    "Obour City",
-    "Sheikh Zayed City",
-    "Sadat City",
-    "Shalateen",
-    "Halayeb",
-    "Ras Gharib",
-    "Safaga",
-    "El Tor",
-    "Nakhl",
-    "Rafah",
-    "Bir El Abd",
   ];
 
   const validateForm = () => {
@@ -105,7 +82,7 @@ export default function CheckOut() {
 
     try {
       const res = await axios.post(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://el-kadi.github.io/FreshCart-E-commerce-App`,
+        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${window.location.origin}`,
         { shippingAddress },
         { headers: { token: localStorage.getItem("token") } }
       );
@@ -119,9 +96,9 @@ export default function CheckOut() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Checkout</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-screen-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold mb-6 text-center">Checkout</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-medium">Shipping Details</label>
           <input
@@ -133,7 +110,7 @@ export default function CheckOut() {
                 details: e.target.value,
               })
             }
-            className="mt-1 block w-full p-2 border rounded-md"
+            className="mt-1 block w-full p-3 border rounded-md"
             placeholder="Enter shipping details"
           />
           {errors.details && (
@@ -149,7 +126,7 @@ export default function CheckOut() {
             onChange={(e) =>
               setShippingAddress({ ...shippingAddress, phone: e.target.value })
             }
-            className="mt-1 block w-full p-2 border rounded-md"
+            className="mt-1 block w-full p-3 border rounded-md"
             placeholder="Enter your phone number"
           />
           {errors.phone && (
@@ -164,7 +141,7 @@ export default function CheckOut() {
             onChange={(e) =>
               setShippingAddress({ ...shippingAddress, city: e.target.value })
             }
-            className="w-full p-2 border rounded-md"
+            className="w-full p-3 border rounded-md"
           >
             <option value="">Select a city</option>
             {egyptianCities.map((city) => (
@@ -178,28 +155,30 @@ export default function CheckOut() {
 
         <div>
           <label className="block text-sm font-medium">Payment Method</label>
-          <div className="flex space-x-4">
+          <div className="grid grid-cols-2 gap-4">
             <button
               type="button"
-              className={`p-2 rounded-md ${
+              className={`p-3 rounded-md text-center ${
                 paymentMethod === "Cash on Delivery"
                   ? "bg-green-500 text-white"
                   : "bg-gray-300"
               }`}
               onClick={() => setPaymentMethod("Cash on Delivery")}
             >
-              <FaMoneyBillWave /> Cash on Delivery
+              <FaMoneyBillWave className="inline-block mr-2" />
+              Cash on Delivery
             </button>
             <button
               type="button"
-              className={`p-2 rounded-md ${
+              className={`p-3 rounded-md text-center ${
                 paymentMethod === "Pay Online"
                   ? "bg-blue-500 text-white"
                   : "bg-gray-300"
               }`}
               onClick={() => setPaymentMethod("Pay Online")}
             >
-              <FaCreditCard /> Pay Online
+              <FaCreditCard className="inline-block mr-2" />
+              Pay Online
             </button>
           </div>
           {errors.paymentMethod && (
@@ -209,12 +188,12 @@ export default function CheckOut() {
 
         <button
           type="submit"
-          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-md"
           disabled={isLoading}
         >
           {isLoading ? "Processing..." : "Place Order"}
         </button>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
       </form>
     </div>
   );

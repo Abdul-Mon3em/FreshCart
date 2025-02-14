@@ -56,9 +56,11 @@ export default function Login() {
     <>
       <form
         onSubmit={formik.handleSubmit}
-        className="w-3/4 max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md"
+        className="w-full max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md"
       >
-        <h2 className="text-2xl text-mainclr my-7 font-bold">Login Form</h2>
+        <h2 className="text-3xl text-mainclr my-7 font-bold text-center">
+          Login Form
+        </h2>
 
         <div className="relative z-0 w-full mb-5 group">
           <input
@@ -66,7 +68,7 @@ export default function Login() {
             type="email"
             name="email"
             id="email"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -86,7 +88,7 @@ export default function Login() {
             type="password"
             name="password"
             id="password"
-            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
+            className="block py-3 px-2 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-mainclr focus:outline-none focus:ring-0 focus:border-mainclr peer"
             placeholder=" "
           />
           <label
@@ -101,12 +103,9 @@ export default function Login() {
         )}
         {errorMess && <ErrorMessage message={errorMess} />}
 
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center mt-5">
           <Link to={`/forget-password`}>
-            <span
-              type="submit"
-              className="text-black cursor-pointer hover:text-mainclrbold duration-300 font-medium text-lg sm:w-auto py-2.5 text-center"
-            >
+            <span className="text-black cursor-pointer hover:text-mainclrbold duration-300 font-medium text-lg sm:w-auto py-2.5 text-center">
               Forget Your Password ?
             </span>
           </Link>
@@ -114,11 +113,9 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] 
-            focus:ring-4 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-sm 
-            px-5 py-2.5 text-center me-2 mb-2 dark:border-[#198754] mt-3 dark:text-[#198754] 
-            dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms] 
-            ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`text-[#198754] hover:text-white border border-[#198754] hover:bg-[#198754] focus:ring-4 focus:outline-none focus:ring-[#198754] font-medium rounded-lg text-lg px-6 py-2 text-center me-2 mb-2 dark:border-[#198754] dark:text-[#198754] dark:hover:text-white dark:hover:bg-[#198754] dark:focus:ring-[#198754] duration-[370ms] ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {isLoading ? <FaSpinner className="animate-spin" /> : "Login"}
           </button>

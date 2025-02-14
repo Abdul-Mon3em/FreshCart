@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../ProductsCard/ProductsCard";
@@ -12,16 +12,17 @@ async function fetchProducts() {
 
 export default function Home() {
   const {
-    data: products,
+    data: products = [],
     isLoading,
     isError,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
     staleTime: 3600000,
-    retry: 20,
-    retryDelay: 20000,
+    retry: 5,
+    retryDelay: 10000,
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,
     refetchOnMount: false,
@@ -29,46 +30,26 @@ export default function Home() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const placeholderCount = 40;
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [products, searchTerm]);
 
   if (isLoading) {
     return (
-      <>
-        <div className="mb-4 "></div>
-        <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 ">
-          {Array.from({ length: placeholderCount }).map((_, index) => (
-            <div
-              key={index}
-              role="status"
-              className="max-w-sm p-4 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700 w-full  mx-auto"
-            >
-              <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded-sm dark:bg-gray-700">
-                <svg
-                  className="w-10 h-10 text-gray-200 dark:text-gray-600"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 16 20"
-                >
-                  <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
-                  <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
-                </svg>
-              </div>
-              <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5" />
-              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
-              <div className="flex items-center mt-4 ">
-                <div>
-                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2" />
-                  <div className="w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
-                </div>
-              </div>
-              <span className="sr-only">Loading...</span>
-            </div>
-          ))}
-        </div>
-      </>
+      <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 ">
+        {Array.from({ length: 40 }).map((_, index) => (
+          <div
+            key={index}
+            className="animate-pulse p-4 border rounded-sm shadow-sm"
+          >
+            <div className="h-48 bg-gray-300 rounded-sm"></div>
+            <div className="h-4 bg-gray-200 rounded mt-2 w-3/4"></div>
+            <div className="h-3 bg-gray-200 rounded mt-1 w-1/2"></div>
+          </div>
+        ))}
+      </div>
     );
   }
 
@@ -76,13 +57,15 @@ export default function Home() {
     return (
       <div className="text-center text-red-600 font-bold text-xl my-10">
         {error.message}
+        <button
+          onClick={() => refetch()}
+          className="block mx-auto mt-4 bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Retry
+        </button>
       </div>
     );
   }
-
-  const filteredProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <>
@@ -124,11 +107,15 @@ export default function Home() {
       </form>
 
       <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-        {filteredProducts.map((p) => (
-          <div key={p.id} className="hover:scale-105 duration-300">
-            <ProductCard product={p} />
-          </div>
-        ))}
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((p) => (
+            <div key={p.id} className="hover:scale-105 duration-300">
+              <ProductCard product={p} />
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-500">No products found.</p>
+        )}
       </div>
     </>
   );
