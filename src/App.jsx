@@ -92,11 +92,11 @@ function App() {
         {
           path: "allorders",
           element: (
-            <ProtectedRoute>
-              <OrdersProtectedRoute>
+            // <ProtectedRoute>
+              // <OrdersProtectedRoute>
                 <AllOrders />
-              </OrdersProtectedRoute>
-            </ProtectedRoute>
+              // </OrdersProtectedRoute>
+            // </ProtectedRoute>
           ),
         },
         {
