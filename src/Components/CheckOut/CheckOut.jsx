@@ -290,8 +290,9 @@ export default function CheckOut() {
         { headers: { token: localStorage.getItem("token") } }
       );
       if (res.data.status === "success") {
-        window.location.href = res.data.session.url;
-        setTimeout(() => navigate("/"), 3000);
+        const paymentUrl = res.data.session.url;
+        window.location.href = paymentUrl;
+        setTimeout(() => navigate("/"), 3000); 
       }
     } catch (error) {
       setError("Failed to complete payment. Please try again.");
