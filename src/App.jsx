@@ -59,9 +59,9 @@ function App() {
           path: "checkout",
           element: (
             <ProtectedRoute>
-              {/* <CartProtectedRoute> */}
+              <CartProtectedRoute>
                 <Checkout />
-              {/* </CartProtectedRoute> */}
+              </CartProtectedRoute>
             </ProtectedRoute>
           ),
         },
@@ -92,11 +92,11 @@ function App() {
         {
           path: "allorders",
           element: (
-            // <ProtectedRoute>
-              // <OrdersProtectedRoute>
+            <ProtectedRoute>
+              <OrdersProtectedRoute>
                 <AllOrders />
-              // </OrdersProtectedRoute>
-            // </ProtectedRoute>
+              </OrdersProtectedRoute>
+            </ProtectedRoute>
           ),
         },
         {
