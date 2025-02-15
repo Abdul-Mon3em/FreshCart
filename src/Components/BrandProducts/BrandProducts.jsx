@@ -54,7 +54,6 @@ export default function BrandProducts() {
     );
   }
 
-  // فلترة المنتجات بناءً على الـ brand.slug
   const filteredProducts = allProducts.filter(
     (product) => product.brand.slug === brandSlug
   );

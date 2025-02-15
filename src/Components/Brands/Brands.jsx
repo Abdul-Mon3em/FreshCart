@@ -66,7 +66,7 @@ export default function Brands() {
             className="w-full object-contain mb-4"
           />
           <h2
-            onClick={() => navigate(`/brand/${brand.slug}`)} // ✅ تم التعديل هنا
+            onClick={() => navigate(`/brand/${brand.slug}`)} 
             className="text-center font-semibold text-lg cursor-pointer hover:text-blue-500 transition"
           >
             {brand.name}

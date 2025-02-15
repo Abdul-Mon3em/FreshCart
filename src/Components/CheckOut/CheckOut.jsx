@@ -21,6 +21,7 @@ export default function CheckOut() {
   const egyptianCities = [
     "Cairo",
     "Alexandria",
+    "Kafr El Zayyat",
     "Giza",
     "Shubra El Kheima",
     "Port Said",

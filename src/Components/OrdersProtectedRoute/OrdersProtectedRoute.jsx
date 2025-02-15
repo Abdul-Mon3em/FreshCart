@@ -7,7 +7,7 @@ export default function OrdersProtectedRoute({ children }) {
   const redirectStatus = params.get("redirect_status");
 
   if (!paymentIntent || redirectStatus !== "succeeded") {
-    return <Navigate to="/FreshCart-E-commerce-App" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

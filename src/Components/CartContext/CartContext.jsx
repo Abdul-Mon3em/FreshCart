@@ -27,9 +27,9 @@ export default function CartContextProvider({ children }) {
       );
 
       if (res.data.status === "success") {
-        setCartItems(res.data.data?.products || []); // تحقق من وجود products
-        setCartCount(res.data.numOfCartItems || 0); // تحقق من وجود numOfCartItems
-        setCartId(res.data.data?._id || null); // تحقق من وجود _id
+        setCartItems(res.data.data?.products || []);
+        setCartCount(res.data.numOfCartItems || 0);
+        setCartId(res.data.data?._id || null);
       }
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch cart data.");
@@ -59,7 +59,6 @@ export default function CartContextProvider({ children }) {
       const res = await axios({ method, url, data: body, headers: { token } });
 
       if (res.data.status === "success" || res.data.message === "success") {
-        // تحقق من وجود res.data.data قبل استخدام products
         setCartItems(res.data.data?.products || []);
         setCartCount(res.data.numOfCartItems || 0);
       }

@@ -69,7 +69,6 @@ export default function Categories() {
 
   return (
     <>
-      {/* عرض كل الـ Categories */}
       <div className="grid lg:grid-cols-3 gap-6 grid-cols-2">
         {categories.map((category) => (
           <div

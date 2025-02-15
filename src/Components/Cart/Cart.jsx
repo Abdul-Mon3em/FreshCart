@@ -14,7 +14,7 @@ export default function Cart() {
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [isClearing, setIsClearing] = useState(false); // State for clearing cart
+  const [isClearing, setIsClearing] = useState(false);
 
   useEffect(() => {
     const loadCart = async () => {
@@ -29,9 +29,9 @@ export default function Cart() {
     cartItems?.reduce((total, item) => total + item.price * item.count, 0) ?? 0;
 
   const handleClearCart = async () => {
-    setIsClearing(true); // Start clearing
-    await clearCart(); // Wait for the cart to clear
-    setIsClearing(false); // Done clearing
+    setIsClearing(true); 
+    await clearCart(); 
+    setIsClearing(false); 
   };
 
   if (isLoading) {
@@ -65,7 +65,7 @@ export default function Cart() {
                         onClick={() =>
                           updateProductQuantity(
                             item.product?._id,
-                            Math.max(1, item.count - 1) // هنا تم إصلاح القوس
+                            Math.max(1, item.count - 1) 
                           )
                         }
                         className="bg-gray-200 px-3 py-1 rounded"
@@ -103,7 +103,7 @@ export default function Cart() {
           <div className="mt-4 flex gap-4">
             <button
               onClick={handleClearCart}
-              disabled={isClearing} // Disable button while clearing
+              disabled={isClearing} 
               className={`px-4 py-2 text-red-500 border border-red-500 rounded-lg hover:bg-red-500 hover:text-white transition ${
                 isClearing ? "opacity-50 cursor-not-allowed" : ""
               }`}
