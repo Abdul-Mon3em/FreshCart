@@ -7,7 +7,7 @@ export default function OrdersProtectedRoute({ children }) {
   const redirectStatus = params.get("redirect_status");
 
   if (!paymentIntent || redirectStatus !== "succeeded") {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" />;
   }
 
   return children;
