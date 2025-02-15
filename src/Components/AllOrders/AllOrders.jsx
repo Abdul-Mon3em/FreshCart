@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function AllOrders() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isPaymentVerified, setIsPaymentVerified] = useState(null);
+  const [isPaymentVerified, setIsPaymentVerified] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -15,26 +15,11 @@ export default function AllOrders() {
     if (redirectStatus === "succeeded" && paymentIntent) {
       setIsPaymentVerified(true);
     } else {
-      setIsPaymentVerified(false);
-      setTimeout(() => navigate("/FreshCart-E-commerce-App"), 3000);
+      navigate("/");
     }
   }, [location, navigate]);
 
-  if (isPaymentVerified === null) {
-    return (
-      <div className="flex items-center justify-center h-screen text-gray-500">
-        Loading...
-      </div>
-    );
-  }
-
-  if (!isPaymentVerified) {
-    return (
-      <div className="text-center mt-10 text-red-500">
-        Payment verification failed! Redirecting...
-      </div>
-    );
-  }
+  if (!isPaymentVerified) return null;
 
   return (
     <div className="h-[50vh] absolute inset-0 translate-y-[50%]">

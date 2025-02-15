@@ -59,9 +59,9 @@ function App() {
           path: "checkout",
           element: (
             <ProtectedRoute>
-              <CartProtectedRoute>
+              {/* <CartProtectedRoute> */}
                 <Checkout />
-              </CartProtectedRoute>
+              {/* </CartProtectedRoute> */}
             </ProtectedRoute>
           ),
         },
@@ -93,9 +93,9 @@ function App() {
           path: "allorders",
           element: (
             <ProtectedRoute>
-              <OrdersProtectedRoute>
+              {/* <OrdersProtectedRoute> */}
                 <AllOrders />
-              </OrdersProtectedRoute>
+              {/* </OrdersProtectedRoute> */}
             </ProtectedRoute>
           ),
         },
@@ -153,11 +153,7 @@ function App() {
           path: "reset-password",
           element: (
             <AuthProtected>
-              {forgotPasswordVisited ? (
-                <ResetPassword />
-              ) : (
-                <Navigate to="/forget-password" />
-              )}
+              <ResetPassword />
             </AuthProtected>
           ),
         },
