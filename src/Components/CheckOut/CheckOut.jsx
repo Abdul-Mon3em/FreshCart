@@ -76,7 +76,7 @@ export default function CheckOut() {
     if (paymentMethod === "Cash on Delivery") {
       alert("Order placed successfully! Pay when you receive your order.");
       clearCart();
-      navigate("/allorders");
+      navigate("/");
       return;
     }
 
